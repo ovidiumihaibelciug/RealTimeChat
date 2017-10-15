@@ -11574,7 +11574,8 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         message: '',
         chat: {
             message: [],
-            user: []
+            user: [],
+            color: []
         },
         error: ''
 
@@ -11587,6 +11588,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             if (this.message.length != 0 && this.message != null && this.message != '') {
                 this.chat.message.push(this.message);
                 this.chat.user.push('You');
+                this.chat.color.push('success');
                 axios.post('/send', {
                     message: this.message
                 }).then(function (response) {
@@ -11609,6 +11611,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         Echo.private('chat').listen('ChatEvent', function (e) {
             _this2.chat.message.push(e.message);
             _this2.chat.user.push(e.user);
+            _this2.chat.color.push('warning');
             console.log(e);
         });
     }
