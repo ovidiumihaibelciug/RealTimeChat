@@ -11573,7 +11573,8 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     data: {
         message: '',
         chat: {
-            message: []
+            message: [],
+            user: []
         },
         error: ''
 
@@ -11581,9 +11582,19 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
     methods: {
         send: function send() {
+            var _this = this;
+
             if (this.message.length != 0 && this.message != null && this.message != '') {
                 this.chat.message.push(this.message);
-                this.message = '';
+                this.chat.user.push('You');
+                axios.post('/send', {
+                    message: this.message
+                }).then(function (response) {
+                    console.log(response);
+                    _this.message = '';
+                }).catch(function (error) {
+                    console.log(error);
+                });
             } else {
                 this.error = "You have to type someting!";
             }
@@ -11591,8 +11602,16 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         seen: function seen() {
             this.$emit('seen');
         }
-    }
+    },
+    mounted: function mounted() {
+        var _this2 = this;
 
+        Echo.private('chat').listen('ChatEvent', function (e) {
+            _this2.chat.message.push(e.message);
+            _this2.chat.user.push(e.user);
+            console.log(e);
+        });
+    }
 });
 
 /***/ }),
@@ -47750,9 +47769,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['color'],
+    props: ['color', 'user'],
     computed: {
         className: function className() {
             return 'list-group-item-' + this.color;
@@ -47768,12 +47790,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "li",
-    { staticClass: "list-group-item", class: _vm.className },
-    [_vm._t("default")],
-    2
-  )
+  return _c("div", [
+    _c(
+      "li",
+      { staticClass: "list-group-item", class: _vm.className },
+      [_vm._t("default"), _vm._v(" " + _vm._s(_vm.user))],
+      2
+    ),
+    _vm._v(" "),
+    _c("span", [_vm._v(_vm._s(_vm.user))])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
