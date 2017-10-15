@@ -1,7 +1,7 @@
 <template>
     <div>
-        <li class="list-group-item" :class="className"><slot></slot> {{ user }}</li>
-        <span>{{ user }}</span>
+        <li class="list-group-item" :class="className"><slot></slot></li>
+        <span class="badge badge-primary">{{ user }}</span>
     </div>
 </template>
 

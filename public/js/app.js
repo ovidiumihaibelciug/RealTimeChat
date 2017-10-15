@@ -47794,11 +47794,13 @@ var render = function() {
     _c(
       "li",
       { staticClass: "list-group-item", class: _vm.className },
-      [_vm._t("default"), _vm._v(" " + _vm._s(_vm.user))],
+      [_vm._t("default")],
       2
     ),
     _vm._v(" "),
-    _c("span", [_vm._v(_vm._s(_vm.user))])
+    _c("span", { staticClass: "badge badge-primary" }, [
+      _vm._v(_vm._s(_vm.user))
+    ])
   ])
 }
 var staticRenderFns = []
