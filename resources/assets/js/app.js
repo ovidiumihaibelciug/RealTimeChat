@@ -6,8 +6,11 @@
  */
 
 import Vue from 'vue'
+import Toaster from 'v-toaster'
 import VueChatScroll from 'vue-chat-scroll'
+import 'v-toaster/dist/v-toaster.css'
 Vue.use(VueChatScroll)
+Vue.use(Toaster, {timeout: 5000})
 
 require('./bootstrap');
 
@@ -98,9 +101,12 @@ const app = new Vue({
             })
         .joining((user) => {
             this.nrUsers++;
+            this.$toaster.success(user.name + ' just joined to chat.');
+
         })
         .leaving((user) => {
             this.nrUsers--;
+            this.$toaster.error(user.name + ' just leaved the chat.')
         });
     },
 
