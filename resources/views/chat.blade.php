@@ -7,7 +7,10 @@
             <div class="col-md-6">
                 <ul class="list-group">
 
-                    <li class="list-group-item active"><strong>Chat room</strong></li>
+                    <li class="list-group-item active">
+                        <strong>Chat room</strong>
+                        <span class="badge badge-pill badge-danger">@{{ nrUsers }}</span>
+                    </li>
                     <div class="messages" v-chat-scroll>
                         <message-component v-for="value, index in chat.message" :key="value.index" :user=chat.user[index] :color=chat.color[index] :time=chat.time[index] style="height: auto">
                             @{{ value }}

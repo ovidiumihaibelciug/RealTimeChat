@@ -33,6 +33,7 @@ const app = new Vue({
         },
         error: '',
         typing: '',
+        nrUsers: '',
 
     },
 
@@ -73,7 +74,7 @@ const app = new Vue({
         getTime: function () {
             var time = new Date();
             return time.getHours() + ':' + time.getMinutes();
-        }
+        },
     },
     mounted() {
         Echo.private('chat')
@@ -90,6 +91,16 @@ const app = new Vue({
                 } else {
                     this.typing = '';
             }
+        })
+        Echo.join(`chat`)
+            .here((users) => {
+                this.nrUsers = users.length;
+            })
+        .joining((user) => {
+            this.nrUsers++;
+        })
+        .leaving((user) => {
+            this.nrUsers--;
         });
     },
 

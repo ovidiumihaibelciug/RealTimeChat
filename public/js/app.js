@@ -115,7 +115,8 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             time: []
         },
         error: '',
-        typing: ''
+        typing: '',
+        nrUsers: ''
 
     },
 
@@ -172,6 +173,13 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             } else {
                 _this2.typing = '';
             }
+        });
+        Echo.join('chat').here(function (users) {
+            _this2.nrUsers = users.length;
+        }).joining(function (user) {
+            _this2.nrUsers++;
+        }).leaving(function (user) {
+            _this2.nrUsers--;
         });
     }
 });
