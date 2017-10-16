@@ -111,7 +111,8 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         chat: {
             message: [],
             user: [],
-            color: []
+            color: [],
+            time: []
         },
         error: '',
         typing: ''
@@ -134,6 +135,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 this.chat.message.push(this.message);
                 this.chat.user.push('You');
                 this.chat.color.push('success');
+                this.chat.time.push(this.getTime());
                 axios.post('/send', {
                     message: this.message
                 }).then(function (response) {
@@ -148,6 +150,11 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         },
         seen: function seen() {
             this.$emit('seen');
+        },
+
+        getTime: function getTime() {
+            var time = new Date();
+            return time.getHours() + ':' + time.getMinutes();
         }
     },
     mounted: function mounted() {
@@ -157,6 +164,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             _this2.chat.message.push(e.message);
             _this2.chat.user.push(e.user);
             _this2.chat.color.push('warning');
+            _this2.chat.time.push(_this2.getTime());
             console.log(e);
         }).listenForWhisper('typing', function (e) {
             if (e.name != '') {
@@ -47805,9 +47813,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['color', 'user'],
+    props: ['color', 'user', 'time'],
     computed: {
         className: function className() {
             return 'list-group-item-' + this.color;
@@ -47827,7 +47839,11 @@ var render = function() {
     _c(
       "li",
       { staticClass: "list-group-item", class: _vm.className },
-      [_vm._t("default")],
+      [
+        _vm._t("default"),
+        _vm._v(" "),
+        _c("small", { staticClass: "pull-right" }, [_vm._v(_vm._s(_vm.time))])
+      ],
       2
     ),
     _vm._v(" "),
