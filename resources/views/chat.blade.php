@@ -12,6 +12,7 @@
                         <message-component v-for="value, index in chat.message" :key="value.index" :user=chat.user[index] :color=chat.color[index]  style="height: auto">
                             @{{ value }}
                         </message-component>
+                        <div class="badge badge-pill badge-primary pull-right clearfix"  v-if="typing"> @{{ typing }} </div>
                     </div>
 
                     <li class="list-group-item">

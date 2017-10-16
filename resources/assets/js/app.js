@@ -31,7 +31,17 @@ const app = new Vue({
             color:[],
         },
         error: '',
+        typing: '',
 
+    },
+
+    watch: {
+         message: function() {
+            Echo.private('chat')
+                .whisper('typing', {
+                    name: this.message
+                });
+        }
     },
 
     methods:{
@@ -61,10 +71,17 @@ const app = new Vue({
     mounted() {
         Echo.private('chat')
             .listen('ChatEvent', (e) => {
-            this.chat.message.push(e.message);
-            this.chat.user.push(e.user);
-            this.chat.color.push('warning');
-            console.log(e);
+                this.chat.message.push(e.message);
+                this.chat.user.push(e.user);
+                this.chat.color.push('warning');
+                console.log(e);
+            })
+            .listenForWhisper('typing', (e) => {
+                if (e.name != '') {
+                    this.typing = 'typing...';
+                } else {
+                    this.typing = '';
+            }
         });
     },
 
